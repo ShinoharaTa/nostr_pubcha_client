@@ -1,0 +1,1 @@
+const String termsText = "利用規約などのテキストをここに書く。超長く書く";
