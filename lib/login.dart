@@ -20,45 +20,56 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // title: Text('ログイン'),
-          ),
+        title: Text('ログイン'),
+      ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
-              child: SelectableText(
+              child: SingleChildScrollView(
+                  child: Text(
                 termsText,
                 textAlign: TextAlign.center,
+              )),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: Text('アカウント新規作成'),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChatScreen()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
               ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ElevatedButton(
-                  child: Text('アカウント新規作成'),
-                  onPressed: () {
-                    // 新規作成画面に遷移するロジック
-                  },
+            SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'ユーザーID',
+                  border: OutlineInputBorder(),
                 ),
-                SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'ユーザーID',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(width: 8), // テキストフィールドとボタンの間にスペースを追加
-                ElevatedButton(
+              ),
+            ),
+            SizedBox(height: 4),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
                   child: Text('ログイン'),
                   onPressed: () {
-                    // ログイン画面に遷移するロジック
-                  },
-                ),
-              ],
-            ),
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatScreen()),
+                      (Route<dynamic> route) => false,
+                    );
+                  }),
+            )
           ],
         ),
       ),
