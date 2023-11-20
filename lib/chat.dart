@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'const/const.dart';
 import 'settings.dart';
 import 'post.dart';
 import "nostr/content.dart";
@@ -34,7 +35,7 @@ class ViewState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    fetchRecentChannelMessages("2b184fe3dcdabfc9e2983b1316158c2ef88f54cce58f2cb6572bf59bfd008ec8", recentChannelMessagesCallback);
+    fetchRecentChannelMessages(AppConfig.channelId, recentChannelMessagesCallback);
     // fetchRecentMessages(recentChannelMessagesCallback);
   }
 

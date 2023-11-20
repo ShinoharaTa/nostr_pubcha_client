@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:nostr_pubcha_client/nostr/profile.dart';
+import 'package:nostr_pubcha_client/nostr/store.dart';
 import 'chat.dart';
-import "const/text.dart";
+import "const/const.dart";
 
 // void main() {
 //   runApp(MyApp());
@@ -15,7 +19,31 @@ import "const/text.dart";
 //   }
 // }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State {
+  @override
+  void initState() {
+    super.initState();
+    checkLoginAndNavigate(context);
+  }
+
+  Future<void> checkLoginAndNavigate(BuildContext context) async {
+    await loadingProfile();
+    print(PublicCore.privateKey);
+    print(PublicCore.publicKey);
+    if (PublicCore.privateKey != null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => ChatScreen()),
+        (Route<dynamic> route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +66,9 @@ class LoginScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 child: Text('アカウント新規作成'),
-                onPressed: () {
+                onPressed: () async {
+                  await generateProfile();
+                  // print(generatePrivateKey());
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => ChatScreen()),

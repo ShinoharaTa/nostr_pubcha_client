@@ -38,6 +38,7 @@ dependencies:
   nostr_core_dart: ^1.0.1
   synchronized: ^3.1.0
   mutex: ^3.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
