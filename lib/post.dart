@@ -21,11 +21,11 @@ class PostScreen extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: _controller,
-              maxLines: 5,
+              maxLines: 10,
               minLines: 1,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
-                hintText: 'What\'s up ?',
+                hintText: 'パブリックチャットに投稿してみよう',
                 border: OutlineInputBorder(),
               ),
             ),
