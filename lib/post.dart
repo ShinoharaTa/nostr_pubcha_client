@@ -17,18 +17,19 @@ class PostScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TextField(
               controller: _controller,
-              maxLines: null, // 改行可能にする
+              maxLines: 5,
+              minLines: 1,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 hintText: 'What\'s up ?',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 120),
+            SizedBox(height: 20),
             ElevatedButton(
               child: Text('投稿'),
               onPressed: () {
