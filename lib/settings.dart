@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nostr_pubcha_client/nostr/profile.dart';
+import 'package:nostr_pubcha_client/nostr/store.dart';
 import 'login.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -8,23 +9,61 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State {
+  bool _showPrivateKey = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('設定'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('ログアウト'),
-          onPressed: () {
-            clearProfile();
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-              (Route<dynamic> route) => false,
-            );
-          },
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('公開鍵'),
+            SelectableText(
+              PublicCore.publicKey != null ? getEncodedPubkey(PublicCore.publicKey) : '公開鍵がありません',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            Text('秘密鍵'),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: SelectableText(
+                    _showPrivateKey
+                        ? (PublicCore.privateKey != null ? getEncodedPrivkey(PublicCore.privateKey) : '公開鍵がありません')
+                        : '●●●●●●',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    _showPrivateKey ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _showPrivateKey = !_showPrivateKey;
+                    });
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              child: Text('ログアウト'),
+              onPressed: () {
+                clearProfile();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

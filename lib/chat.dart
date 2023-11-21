@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:nostr_core_dart/nostr.dart';
 import 'const/const.dart';
 import 'settings.dart';
 import 'post.dart';
