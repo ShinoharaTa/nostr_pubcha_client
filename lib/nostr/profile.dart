@@ -33,34 +33,29 @@ String getEncodedPubkey(pubKey) {
   return Nip19.encodePubkey(pubKey);
 }
 
-Future<User?> loadSetting(String userId) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? userJson = prefs.getString("me");
-  if (userJson != null) {
-    return User.fromJson(json.decode(userJson));
-  }
-  return null;
+nsecLogin(String nsec) async {
+  return Event.from(kind: 2, tags: [], content: "", privkey: Nip19.decodePrivkey(nsec));
+  // nsec1hxwcg2lypc8ma5pan00lvfc50juz6rfecj3hgx3pnkzfkq7md9qqg4f49v
 }
 
 generateProfile() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final result = await generatePrivateKey();
-  final enPrivkey = result.enPrivkey;
-  print(enPrivkey);
-  print(getEncodedPubkey(result.user.public));
-  print(getEncodedPrivkey(result.user.private));
+  // print(result.enPrivkey);
+  // print(getEncodedPubkey(result.user.public));
+  // print(getEncodedPrivkey(result.user.private));
   PublicCore.privateKey = result.user.private;
   PublicCore.publicKey = result.user.public;
   final String avatar_url =
       'https://api.dicebear.com/7.x/thumbs/svg?seed=${result.user.public}';
   User user = User(
-    about:   AppConfig.me.about,
+    about: AppConfig.me.about,
     picture: avatar_url,
     name: AppConfig.me.name,
     displayName: AppConfig.me.displayName,
   );
   PublicCore.user = user;
-  Event event = Nip1.setMetadata(AppConfig.me.toJson(), result.user.private);
+  Event event = Nip1.setMetadata(user.toJson(), result.user.private);
   Connect.sharedInstance.sendEvent(event);
   await prefs.setString("me_sec", result.user.private);
   await prefs.setString("me_pub", result.user.public);
@@ -82,7 +77,7 @@ generateProfile() async {
   // await database.userDao.insertUser(newUser);
 }
 
-loadingProfile () async {
+loadingProfile() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String? sec = prefs.getString("me_sec");
   String? pub = prefs.getString("me_pub");
@@ -94,11 +89,14 @@ loadingProfile () async {
     PublicCore.privateKey = sec;
     PublicCore.publicKey = pub;
     PublicCore.user = User.fromJson(json.decode(userJson));
+    print(PublicCore.privateKey);
+    print(PublicCore.publicKey);
+    print(PublicCore.user);
+    AppConfig.me = User.fromJson(json.decode(userJson));
   }
-  return;
 }
 
-clearProfile () async {
+clearProfile() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove("me_sec");
   prefs.remove("me_pub");

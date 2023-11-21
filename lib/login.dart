@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:nostr_pubcha_client/nostr/connect.dart';
 import 'package:nostr_pubcha_client/nostr/profile.dart';
 import 'package:nostr_pubcha_client/nostr/store.dart';
 import 'chat.dart';
@@ -25,16 +27,31 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State {
+ final List<String> relays = [
+    'wss://relay-jp.nostr.wirednet.jp/',
+    'wss://yabu.me/',
+    'wss://r.kojira.io/',
+    'wss://relay-jp.shino3.net/'
+  ];
+  int connectedRelays = 0;
+
   @override
   void initState() {
     super.initState();
-    checkLoginAndNavigate(context);
+    Connect.sharedInstance.addConnectStatusListener((relay, status) {
+      if (status == 1) {
+        connectedRelays++;
+        if (connectedRelays == relays.length) {
+          // 全てのリレーが接続されたら
+          checkLoginAndNavigate();
+        }
+      }
+    });
+    Connect.sharedInstance.connectRelays(relays);
   }
 
-  Future<void> checkLoginAndNavigate(BuildContext context) async {
+  void checkLoginAndNavigate() async {
     await loadingProfile();
-    print(PublicCore.privateKey);
-    print(PublicCore.publicKey);
     if (PublicCore.privateKey != null) {
       Navigator.pushAndRemoveUntil(
         context,
@@ -77,29 +94,29 @@ class _LoginScreenState extends State {
                 },
               ),
             ),
-            SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'ユーザーID',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            SizedBox(height: 4),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                  child: Text('ログイン'),
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => ChatScreen()),
-                      (Route<dynamic> route) => false,
-                    );
-                  }),
-            )
+            // SizedBox(height: 16),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: TextField(
+            //     decoration: InputDecoration(
+            //       labelText: 'ユーザーID',
+            //       border: OutlineInputBorder(),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 4),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //       child: Text('ログイン'),
+            //       onPressed: () {
+            //         Navigator.pushAndRemoveUntil(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => ChatScreen()),
+            //           (Route<dynamic> route) => false,
+            //         );
+            //       }),
+            // )
           ],
         ),
       ),

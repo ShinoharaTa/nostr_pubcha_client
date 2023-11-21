@@ -10,10 +10,10 @@ class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
   @override
-  ViewState createState() => ViewState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class ViewState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   final _streamController = StreamController<List<PostListItem>>();
 
   void recentChannelMessagesCallback(
