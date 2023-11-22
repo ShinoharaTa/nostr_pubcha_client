@@ -34,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    // fetchRecentChannelMessages(AppConfig.channelId, recentChannelMessagesCallback);
+    // fetchRecentChannelMessages( ??? , recentChannelMessagesCallback);
   }
 
   @override
@@ -49,9 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
               // step 1
               // 押されたときに期待する画面遷移のナビゲーションを記載する
               // ???
-                        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SettingsScreen() ));
-
             },
           ),
         ],
@@ -72,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
           //   itemBuilder: (context, index) {
           //     PostListItem item = postItems[index];
           //     return ListTile(
-          //       title: Text('Item ${item.name}'),
+          //       title: Text('User: ${item.name}'),
           //       subtitle: Text(item.text),
           //     );
           //   },
