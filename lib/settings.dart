@@ -55,6 +55,7 @@ class _SettingsScreenState extends State {
             ElevatedButton(
               child: Text('ログアウト'),
               onPressed: () {
+                // step 3 ログアウトを実装する
                 // clearProfile();
                 // step 1 押されたときの画面遷移を記載する
                 // ???
