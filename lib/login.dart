@@ -21,7 +21,7 @@ class _LoginScreenState extends State {
   //   wss://r.kojira.io/
   //   wss://relay-jp.shino3.net/
 
-  // final List<String> relays = []
+  // final List<String> relays = [
   //   '',
   //   ''
   // ];
