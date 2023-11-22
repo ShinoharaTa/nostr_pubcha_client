@@ -83,11 +83,11 @@ class _LoginScreenState extends State {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => ChatScreen() ));
                   // step 1.2, 「戻る」ナビゲーションが発生しない画面遷移
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => ChatScreen()),
-                    (Route<dynamic> route) => false,
-                  );
+                  // Navigator.pushAndRemoveUntil(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => ChatScreen()),
+                  //   (Route<dynamic> route) => false,
+                  // );
                   // step 3 アカウントを作ろう
                   // await generateProfile();
                 },
