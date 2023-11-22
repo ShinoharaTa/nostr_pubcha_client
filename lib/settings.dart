@@ -55,7 +55,7 @@ class _SettingsScreenState extends State {
             ElevatedButton(
               child: Text('ログアウト'),
               onPressed: () {
-                clearProfile();
+                // clearProfile();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),

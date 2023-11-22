@@ -34,7 +34,7 @@ class PostScreen extends StatelessWidget {
               child: Text('投稿'),
               onPressed: () {
                 // 共通関数にテキストエリアの内容を渡す
-                post(_controller.text);
+                // post(_controller.text);
                 Navigator.pop(context);
               },
             ),
@@ -44,10 +44,15 @@ class PostScreen extends StatelessWidget {
     );
   }
 
+  // step 4 タイムラインに投稿してみよう
   void post(String text) {
-    // Event.from(kind: 1, content: text, tags: [], privkey: PublicCore.privateKey??"");
-    Event channelMessage = Nip28.sendChannelMessage(
-        AppConfig.channelId, text, null, null, PublicCore.privateKey ?? "");
-    Connect.sharedInstance.sendEvent(channelMessage);
+    // Event channelMessage = Nip28.sendChannelMessage(
+        // チャンネルID
+        // 投稿内容
+        // null,
+        // null,
+        // 作成された秘密鍵 ※ key ?? "" の形式で必ず文字列を渡す
+    // );
+    // Connect.sharedInstance.???( ??? );
   }
 }

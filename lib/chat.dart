@@ -15,29 +15,26 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  // Step 2 タイムラインを表示してみよう
   final _streamController = StreamController<List<PostListItem>>();
-
-  void recentChannelMessagesCallback(
-      List<ChannelMessageItem> channelMessageList) {
-    var postListItems = channelMessageList.map((channelItem) {
-      return PostListItem(
-        id: channelItem.id,
-        // iconUrl:
-        //     'https://api.dicebear.com/7.x/thumbs/svg?seed=${channelItem.author}',
-        name: channelItem.author,
-        text: channelItem.content,
-        images: "",
-        datetime: channelItem.datetime,
-      );
-    }).toList();
-    _streamController.add(postListItems);
-  }
+  // void recentChannelMessagesCallback(
+  //     List<ChannelMessageItem> channelMessageList) {
+  //   var postListItems = channelMessageList.map((channelItem) {
+  //     return PostListItem(
+  //       id: channelItem.id,
+  //       name: channelItem.author,
+  //       text: channelItem.content,
+  //       images: "",
+  //       datetime: channelItem.datetime,
+  //     );
+  //   }).toList();
+  //   _streamController.add( ??? );
+  // }
 
   @override
   void initState() {
     super.initState();
-    fetchRecentChannelMessages(AppConfig.channelId, recentChannelMessagesCallback);
-    // fetchRecentMessages(recentChannelMessagesCallback);
+    // fetchRecentChannelMessages(AppConfig.channelId, recentChannelMessagesCallback);
   }
 
   @override
@@ -49,10 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
-              );
+              // step 1
+              // 押されたときに期待する画面遷移のナビゲーションを記載する
+              // ???
             },
           ),
         ],
@@ -60,32 +56,33 @@ class _ChatScreenState extends State<ChatScreen> {
       body: StreamBuilder<List<PostListItem>>(
         stream: _streamController.stream,
         builder: (context, snapshot) {
+          // step 2 タイムラインを表示してみよう
           // データがない場合
-          if (!snapshot.hasData) {
+          // if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
-          }
+          // }
 
           // データがある場合
-          List<PostListItem> postItems = snapshot.data!;
-          return ListView.builder(
-            itemCount: postItems.length,
-            itemBuilder: (context, index) {
-              PostListItem item = postItems[index];
-              return ListTile(
-                title: Text('Item ${item.name}'),
-                subtitle: Text(item.text),
-              );
-            },
-          );
+          // List<PostListItem> postItems = snapshot.data!;
+          // return ListView.builder(
+          //   itemCount: postItems.length,
+          //   itemBuilder: (context, index) {
+          //     PostListItem item = postItems[index];
+          //     return ListTile(
+          //       title: Text('Item ${item.name}'),
+          //       subtitle: Text(item.text),
+          //     );
+          //   },
+          // );
         },
       ),
+      // ↓ 投稿ボタン
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostScreen()),
-          );
+          // step 1
+          // 押されたときに期待する画面遷移のナビゲーションを記載する
+          // ???
         },
       ),
     );
