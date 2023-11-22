@@ -49,6 +49,9 @@ class _ChatScreenState extends State<ChatScreen> {
               // step 1
               // 押されたときに期待する画面遷移のナビゲーションを記載する
               // ???
+                        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SettingsScreen() ));
+
             },
           ),
         ],
@@ -83,6 +86,8 @@ class _ChatScreenState extends State<ChatScreen> {
           // step 1
           // 押されたときに期待する画面遷移のナビゲーションを記載する
           // ???
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PostScreen() ));
         },
       ),
     );

@@ -81,8 +81,9 @@ class _LoginScreenState extends State {
                 onPressed: () async {
                   // await generateProfile();
                   // step 1, 画面遷移を作る
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ??? ));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => ChatScreen() ));
+                  // step 1.2, 「戻る」ナビゲーションが発生しない画面遷移
                   // Navigator.pushAndRemoveUntil(
                   //   context,
                   //   MaterialPageRoute(builder: (context) => ChatScreen()),
