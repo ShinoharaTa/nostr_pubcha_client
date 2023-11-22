@@ -33,17 +33,9 @@ String getEncodedPubkey(pubKey) {
   return Nip19.encodePubkey(pubKey);
 }
 
-nsecLogin(String nsec) async {
-  return Event.from(kind: 2, tags: [], content: "", privkey: Nip19.decodePrivkey(nsec));
-  // nsec1hxwcg2lypc8ma5pan00lvfc50juz6rfecj3hgx3pnkzfkq7md9qqg4f49v
-}
-
 generateProfile() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final result = await generatePrivateKey();
-  // print(result.enPrivkey);
-  // print(getEncodedPubkey(result.user.public));
-  // print(getEncodedPrivkey(result.user.private));
   PublicCore.privateKey = result.user.private;
   PublicCore.publicKey = result.user.public;
   final String avatar_url =
@@ -60,21 +52,9 @@ generateProfile() async {
   await prefs.setString("me_sec", result.user.private);
   await prefs.setString("me_pub", result.user.public);
   await prefs.setString("me_user", user.toJson());
-  // Event channelMessage = Nip28.sendChannelMessage(
-  //     AppConfig.channelId, "hello!", null, null, result.user.private);
-  // Connect.sharedInstance.sendEvent(channelMessage);
-  // final newUser = UsersCompanion(
-  //   pubkeyHex: result.user.public,
-  //   privkeyHex: result.enPrivkey,
-  //   password: result.password,
-  //   name: "shino3_test_name",
-  //   displayName: d.Value(t.AnonymousDisplayNamePrefix),
-  //   bio: const d.Value(''),
-  //   avatar: d.Value(avatar_url),
-  //   kind0: d.Value(event.content),
-  //   updateAt: DateTime.now()),
-  // );
-  // await database.userDao.insertUser(newUser);
+  Event channelMessage = Nip28.sendChannelMessage(
+      AppConfig.channelId, "hello!", null, null, result.user.private);
+  Connect.sharedInstance.sendEvent(channelMessage);
 }
 
 loadingProfile() async {
