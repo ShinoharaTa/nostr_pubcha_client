@@ -21,10 +21,12 @@ class _LoginScreenState extends State {
   //   wss://r.kojira.io/
   //   wss://relay-jp.shino3.net/
 
-  // final List<String> relays = [
-  //   '',
-  //   ''
-  // ];
+  final List<String> relays = [
+    "wss://relay-jp.nostr.wirednet.jp/",
+    "wss://yabu.me/",
+    "wss://r.kojira.io/",
+    "wss://relay-jp.shino3.net/",
+  ];
 
   int connectedRelays = 0;
 
@@ -32,27 +34,32 @@ class _LoginScreenState extends State {
   void initState() {
     super.initState();
     // step 3 ログイン後のナビゲーションを考える
-    // Connect.sharedInstance.addConnectStatusListener((relay, status) {
-    //   if (status != 0) {
-    //     // リレーステータスが未接続から変更されたら更新
-    //     connectedRelays++;
-    //     if (connectedRelays == relays.length) {
-    //       checkLoginAndNavigate();
-    //     }
-    //   }
-    // });
+    Connect.sharedInstance.addConnectStatusListener((relay, status) {
+      if (status != 0) {
+        // リレーステータスが未接続から変更されたら更新
+        connectedRelays++;
+        if (connectedRelays == relays.length) {
+          checkLoginAndNavigate();
+        }
+      }
+    });
 
     // step 2 タイムラインを取得する
-    // Connect.sharedInstance.connectRelays(relays);
+    Connect.sharedInstance.connectRelays(relays);
   }
 
   // step 3 ログイン後のナビゲーションを考える
   void checkLoginAndNavigate() async {
     // アプリケーションに保存されたログイン情報を取得する
-    // await loadingProfile();
+    await loadingProfile();
     if (PublicCore.privateKey != null) {
       // もし、秘密鍵をもっていたらチャット画面を表示したい
       // チャット画面に飛ばす処理をここに書こう
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => ChatScreen()),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
@@ -79,17 +86,17 @@ class _LoginScreenState extends State {
               child: ElevatedButton(
                 child: Text('アカウント新規作成'),
                 onPressed: () async {
+                  // step 3 アカウントを作ろう
+                  await generateProfile();
                   // step 1, 画面遷移を作る
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => ChatScreen() ));
                   // step 1.2, 「戻る」ナビゲーションが発生しない画面遷移
-                  // Navigator.pushAndRemoveUntil(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => ChatScreen()),
-                  //   (Route<dynamic> route) => false,
-                  // );
-                  // step 3 アカウントを作ろう
-                  // await generateProfile();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChatScreen()),
+                    (Route<dynamic> route) => false,
+                  );
                 },
               ),
             ),

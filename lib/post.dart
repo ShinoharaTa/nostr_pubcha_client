@@ -34,7 +34,7 @@ class PostScreen extends StatelessWidget {
               child: Text('投稿'),
               onPressed: () {
                 // 共通関数にテキストエリアの内容を渡す
-                // post(_controller.text);
+                post(_controller.text);
                 Navigator.pop(context);
               },
             ),
@@ -54,5 +54,13 @@ class PostScreen extends StatelessWidget {
         // 作成された秘密鍵 ※ key ?? "" の形式で必ず文字列を渡す
     // );
     // Connect.sharedInstance.???( ??? );
+    Event channelMessage = Nip28.sendChannelMessage(
+        AppConfig.channelId,
+        text,
+        null,
+        null,
+        PublicCore.privateKey ?? ""
+    );
+    Connect.sharedInstance.sendEvent( channelMessage );
   }
 }

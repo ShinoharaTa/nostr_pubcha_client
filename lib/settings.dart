@@ -56,10 +56,15 @@ class _SettingsScreenState extends State {
               child: Text('ログアウト'),
               onPressed: () {
                 // step 3 ログアウトを実装する
-                // clearProfile();
+                clearProfile();
                 // step 1 押されたときの画面遷移を記載する
                 // ???
                 // step 1.2, 「戻る」ナビゲーションが発生しない画面遷移
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (Route<dynamic> route) => false,
+                  );
               },
             ),
           ],

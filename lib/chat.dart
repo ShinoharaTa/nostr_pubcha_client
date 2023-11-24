@@ -17,24 +17,24 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   // Step 2 タイムラインを表示してみよう
   final _streamController = StreamController<List<PostListItem>>();
-  // void recentChannelMessagesCallback(
-  //     List<ChannelMessageItem> channelMessageList) {
-  //   var postListItems = channelMessageList.map((channelItem) {
-  //     return PostListItem(
-  //       id: channelItem.id,
-  //       name: channelItem.author,
-  //       text: channelItem.content,
-  //       images: "",
-  //       datetime: channelItem.datetime,
-  //     );
-  //   }).toList();
-  //   _streamController.add( ??? );
-  // }
+  void recentChannelMessagesCallback(
+      List<ChannelMessageItem> channelMessageList) {
+    var postListItems = channelMessageList.map((channelItem) {
+      return PostListItem(
+        id: channelItem.id,
+        name: channelItem.author,
+        text: channelItem.content,
+        images: "",
+        datetime: channelItem.datetime,
+      );
+    }).toList();
+    _streamController.add( postListItems );
+  }
 
   @override
   void initState() {
     super.initState();
-    // fetchRecentChannelMessages( ??? , recentChannelMessagesCallback);
+    fetchRecentChannelMessages( AppConfig.channelId, recentChannelMessagesCallback);
   }
 
   @override
@@ -49,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
               // step 1
               // 押されたときに期待する画面遷移のナビゲーションを記載する
               // ???
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
             },
           ),
         ],
@@ -58,22 +59,22 @@ class _ChatScreenState extends State<ChatScreen> {
         builder: (context, snapshot) {
           // step 2 タイムラインを表示してみよう
           // データがない場合
-          // if (!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
-          // }
+          }
 
           // データがある場合
-          // List<PostListItem> postItems = snapshot.data!;
-          // return ListView.builder(
-          //   itemCount: postItems.length,
-          //   itemBuilder: (context, index) {
-          //     PostListItem item = postItems[index];
-          //     return ListTile(
-          //       title: Text('User: ${item.name}'),
-          //       subtitle: Text(item.text),
-          //     );
-          //   },
-          // );
+          List<PostListItem> postItems = snapshot.data!;
+          return ListView.builder(
+            itemCount: postItems.length,
+            itemBuilder: (context, index) {
+              PostListItem item = postItems[index];
+              return ListTile(
+                title: Text('User: ${item.name}'),
+                subtitle: Text(item.text),
+              );
+            },
+          );
         },
       ),
       // ↓ 投稿ボタン
@@ -83,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
           // step 1
           // 押されたときに期待する画面遷移のナビゲーションを記載する
           // ???
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PostScreen()));
         },
       ),
     );
